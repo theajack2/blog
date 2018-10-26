@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="keywords" content="">  
+    <meta name="description" content="">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta content="telephone=no" name="format-detection">
+    <title>Title--(Blog theajack)</title>
+    <link rel="icon" href="assets/images/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/glyphicon.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/article.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css"/>
+  </head>
+  <body>
+    <img class="wc-share-logo" src="assets/images/blog_logo.png"/>
+    <div id="header">
+      <div class="part">
+        <div id="logo">
+          <img src="assets/images/logo.png" onclick="J.jump('index.html')"/>
+        </div>
+        <div class="head-left d-hide" onclick="J.open('https://www.theajack.com/jet/')">
+          Jet
+        </div>
+        <div class="head-left d-hide" onclick="J.open('https://www.theajack.com/jetterjs/')">
+          Jetter.js
+        </div>
+        <div class="head-left d-hide" onclick="develop()">
+          留言板
+        </div>
+        
+        <div class="head-right" id="setWrapper">
+          <span class="glyphicon glyphicon-align-justify" id="set"></span>
+        </div>
+        <div class="head-right login">
+          <span class="glyphicon glyphicon-user"></span>
+          <span class="text">登录</span>
+        </div>
+        
+        <div id="menuWrapper">
+          <div class="menu-triangle"></div>
+          <div class="menu-item regist">注册</div>
+          <div class="menu-item user-center" onclick="develop()">个人中心</div>
+          <div class="menu-item d-show" onclick="J.open('https://www.theajack.com/jet/')">Jet</div>
+          <div class="menu-item d-show" onclick="J.open('https://www.theajack.com/jetterjs/')">Jetterjs</div>
+          <div class="menu-item" onclick="develop()">社区</div>
+          <div class="menu-item d-show" onclick="develop()">留言板</div>
+          <div class="menu-item logout">退出登录</div>
+        </div>
+      </div>
+    </div>
+    <div id="content" class="part clearfix">
+      <div class="block" jet-form="title">
+        <div id="title" jet-name="title">Title</div>
+        <div class="i-info clearfix">
+          <div class=" ii-block darker display-none" id="articleTop">
+            <span class=" glyphicon glyphicon-eject"></span>
+            <span>置顶</span>
+          </div>
+          <div class=" ii-block darker display-none"  id="articleStar">
+            <span class=" glyphicon glyphicon-star"></span>
+            <span>加精</span>
+          </div>
+          <div class=" ii-block cursor-pointer" onclick="prise()">
+            <span class=" glyphicon glyphicon-thumbs-up"></span>
+            <span jet-name="prise_num" class="prise-num">0</span>
+          </div>
+          <div class=" ii-block cursor-pointer" onclick="toComment()">
+            <span class=" glyphicon glyphicon-comment"></span>
+            <span jet-name="comment_num" class="comment-num">0</span>
+          </div>
+          <div class=" ii-block">
+            <span class=" glyphicon glyphicon-eye-open"></span>
+            <span jet-name="watch_num" class="watch-num">0</span>
+          </div>
+          <div class="ii-block author d-hide">
+            <span class=" glyphicon glyphicon-user"></span>
+            <span jet-name="author">author</span>
+          </div>
+          <div class="ii-block time">
+            <span class=" glyphicon glyphicon-calendar"></span>
+            <span jet-name="date">date</span>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div id="text">
+      
+        </div>
+        <div class="text-center">
+          <span id="prise" onclick="prise()">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="prise-num">0</span>
+          </span>
+        </div>
+      </div>
+  
+      <div id="comment" class="block">
+        <div class="block-title">评论</div>
+        <div class="comment-toolbox clearfix">
+          <div class="comment-tool c-face"><img src="assets/images/face.png"/></div>
+          <div class="face-box">
+            <!--代码加载内容-->
+          </div>
+          <div class="comment-tool c-link"><img src="assets/images/link.png"/></div>
+          <div class="comment-tool c-image forbid"><img src="assets/images/image.png"/></div>
+          <div class="comment-tool right button" onclick="comment()">提交</div>
+        </div>
+        <div contenteditable="true" jet-name="content" jet-get="html" class="comment"></div>
+        <jh jet-name="u_id">1</jh>
+        <jh jet-name="a_id"></jh>
+        <jh jet-name="method">comment</jh>
+      </div>
+      <div id="commentList" class="block">
+        <div class="block-title">评论列表</div>
+        <!--代码加载内容-->
+      </div>
+      <div id="hot" class="block">
+        <div class="block-title">最近热帖</div>
+        <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=12&name=smallgame')">微信小游戏开发之获取微信好友数据</div>
+        <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=10&name=nodeqiniu')">基于Nodejs的七牛云上传资源解决方案</div>
+        <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=3&name=jsonp')">jsonp跨域的客户端服务器搭建</div>
+        <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=7&name=cnchar')">js获取汉字的拼音和笔画数</div>
+      </div>
+      <div id="link" class="block ">
+        <div class="block-title">友情链接</div>
+        <div id="tjLinks" link-color="#222"></div>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="footerLink">
+        <span class="link" onclick="J.open('https://github.com/theajack')">GitHub</span>
+        <span class="split-icon">|</span>
+        <span class="link" onclick="J.open('http://weibo.com/p/1005055304330572/home?from=page_100505&mod=TAB&is_all=1')">Sina Micro-blog</span>
+        <span class="split-icon">|</span>
+        
+        <span class="wechat-public d-hide">WeChat Official Accounts<img class="wechat-img" src="assets/images/wechat_qrcode.jpg"/></span>
+        <span class="split-icon d-hide">|</span>
+        
+        Email:theajack@qq.com
+        <div class=" d-show">
+          <span class="wechat-public">
+            WeChat Official Accounts
+            <img class="wechat-img" src="assets/images/wechat_qrcode.jpg"/>
+          </span>
+        </div>
+      </div>
+      <div id="copyright">
+        <span class="glyphicon glyphicon-copyright-mark"></span> 2017 TheaJack All rights reserved
+      </div>
+    </div>
+    <div id="toolBox">
+      <div class="tool-item" onclick="prise()">
+        <span class=" glyphicon glyphicon-thumbs-up"></span>
+      </div>
+      <div class="tool-item go-comment" onclick="toComment()">
+        <span class=" glyphicon glyphicon-comment"></span>
+      </div>
+      <div class="tool-item go-top" onclick="toTop()">
+        <span class="glyphicon glyphicon-circle-arrow-up"></span>
+      </div>
+      <div class="tool-item go-home" onclick="J.jump('https://www.theajack.com/blog')">
+        <span class="glyphicon glyphicon-home"></span>
+      </div>
+    </div>
+    <div id="allComment" class="cover display-none" onclick="closeAllComment()">
+      <div  class="block cover-block" onclick="stopBubble(event)">
+        <div class=" block-title">全部评论
+          <span class="glyphicon glyphicon-remove cover-close" onclick="closeAllComment()"></span>
+        </div>
+        <div id="allCommentList"></div>
+      </div>
+    </div>
+    
+    <div id="floatComment" class="cover display-none" onclick="closeCover(this)">
+      <div class="block cover-block" onclick="stopBubble(event)">
+        <div class="block-title">回复 : 
+          <span class="reply-nickname"></span>
+          <span class="glyphicon glyphicon-remove cover-close" onclick="closeCover(this.parent(3))"></span>
+        </div>
+        <div class="comment-toolbox clearfix">
+          <div class="comment-tool c-face"><img src="assets/images/face.png"/></div>
+          <div class="face-box">
+            <!--代码加载内容-->
+          </div>
+          <div class="comment-tool c-link"><img src="assets/images/link.png"/></div>
+          <div class="comment-tool c-image forbid"><img src="assets/images/image.png"/></div>
+          <div class="comment-tool right button" onclick="reply()">提交</div>
+        </div>
+        <div contenteditable="true" jet-name="content" jet-get="html" class="comment"></div>
+        <span class='display-none' jet-name="bc_id"></span>
+      </div>
+    </div>
+    
+    <div id="zoomImageCover" class="cover display-none">
+      <span class="glyphicon glyphicon-remove cover-close" onclick="closeCover(this.parent())"></span>
+      <div class="page">
+        <div class="pinch-zoom">
+          <img id="zoomImage" src="assets/images/jsonp/6.png"/>
+        </div>
+      </div>
+    </div>
+    
+    <script src="assets/js/jetter.min.js"></script>
+    <script src="https://www.theajack.com/jcode/assets/js/jcode.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/login.js"></script>
+    <script src="assets/js/article.js"></script>
+    <script src="assets/js/pinchzoom.js"></script>
+    <script src="https://www.theajack.com/assets/js/link.js"></script>
+  </body>
+</html>

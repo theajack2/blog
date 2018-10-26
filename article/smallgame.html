@@ -1,0 +1,117 @@
+  
+<jh id="hideDes">微信小游戏之获取同玩的微信好友数据（开放数据域）</jh>
+<jh id="hideKeyWords">微信小游戏，开放数据域</jh>
+<jh id="hideTitle">微信小游戏开发之获取微信好友数据</jh>
+<div class="section">
+2017年1月9日，微信小程序正式上线。一时引起互联网圈内热议，各种app的小程序版本陆续上线。2017年12月28日，微信又上线了微信小游戏，一款跳一跳在朋友圈迅速传播开来，获得了无数的流量。
+</div>
+<div class="section">
+于是笔者决定将之前写的一个h5游戏 -
+<span class="stress-bold link" onclick="J.open('http://www.theajack.com/jjump/')">摇摆玛丽</span>移植到小游戏平台上。
+小游戏之于h5游戏的优势在于小游戏底层其实是使用原生渲染的，就好像 React native 之于 ionic，虽然都是使用js开发。所以性能上是要比h5要好。
+</div>
+<div class="section">
+<span class="stress-bold link" onclick="J.open('https://developers.weixin.qq.com/minigame/dev/document/render/canvas/wx.createCanvas.html?t=2018329')">微信小游戏的API</span>
+还是比较完整的，易于入门，只是在开放数据域（最主要的功能就是获取微信好友数据）这一块写的比较简单，在一番摸索完成这个功能之后，笔者决定将个人心得分享出来，以帮助有需要的朋友。
+</div>
+<div class="section">
+正式开始之前打个小广告，下图是笔者开发的小游戏奔跑的柴柴，主要功能就是通过点击屏幕引导主角跳过沟壑得分，还新增了使用重力计控制跳跃的功能。
+<div class="image" style='margin-bottom:0'><img style='max-width:300px' src="assets/images/smallgame/1.png"/></div>
+<div class="tip d-show">长按图片识别小游戏码</div>
+OK，话不多说正式开始。
+</div>
+<div class="title1">1.搭建小游戏</div>
+<div class="section">由于本文章重点在于开放数据域，所以此部分略过，请读者自行参考
+<span class="stress-bold link" onclick="J.open('https://developers.weixin.qq.com/minigame/dev/document/render/canvas/wx.createCanvas.html?t=2018329')">微信小游戏的API</span>
+。这部分需要有前端和h5游戏的基础，可以使用引擎也可以不使用</div>
+<div class="title1">2.开放数据域</div>
+<div class="title2">1.开放数据域简介</div>
+<div class="section">如果开发者可以任意获取微信至关重要的好友关系链的话，那么可想可知对于微信是一个多么有威胁的事情，于是乎微信搞了一个叫做开放数据与的概念，
+笔者觉得与其叫开放数据域不如叫封闭数据域，因为这个域内只可以接受被动主域发出的消息，不能主动发出消息，估计对于网络请求也有更加严格的限制，
+然后数据需要渲染也只能渲染到一块叫做离屏画布的canvas上，然后通过主域的canvas渲染出来。这样做的目的就是为了一个，关系数据链只能在这个开放数据域内使用。
+<div class="image"><img src="assets/images/smallgame/2.png"/></div>
+<div>
+开放数据域相关的接口如上，本文主要介绍以下几个 :
+<div class='stress-bold'>wx.getSharedCanvas()</div>
+<div class='stress-bold'>wx.getOpenDataContext()</div>
+<div class='stress-bold'>OpenDataContext.canvas</div>
+<div class='stress-bold'>OpenDataContext.postMessage(Object message)</div>
+<div class='stress-bold'>wx.onMessage(function callback)</div>
+<div class='stress-bold'>wx.setUserCloudStorage(Object object)</div>
+<div class='stress-bold'>wx.getUserCloudStorage(Object object)</div>
+<div class='stress-bold'>wx.getFriendCloudStorage(Object object)</div>
+<div>
+其中最后一个便是最重要的获取好友数据的接口。
+</div>
+</div>
+</div>
+<div class="title2">2.搭建开放数据域</div>
+<div class="section">
+  如下图，在原有项目目录的基础上新建 opendatacontext 文件夹，再在这个文件夹新建一个indenx.js文件。
+  <div class="image"><img src="assets/images/smallgame/3.png"/></div>
+  <div>
+    之后将game.json文件改成如下代码，添加开发数据域目录。于是开放数据域就算是搭建好了，就是这么简单。
+  </div>
+</div>
+<div class="code">
+<editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+{
+  "deviceOrientation": "portrait",
+  "openDataContext": "./opendatacontext"
+}</editor>
+  </div>
+<div class="title2">3.OpenDataContext</div>
+<div class="section">
+  通过 wx.getOpenDataContext() 方法获取 OpenDataContext 对象，这个对象主要有两个需要使用的东西：
+  <div>一个是canvas属性，这个主域与开放数据域共用的离屏画布，在开发数据域内使用 wx.getSharedCanvas() 来获取，可以将获取的开放数据绘制在这个离屏画布上。
+  然后在主域内通过OpenDataContext.canvas获取这个离屏画布，并用主画布将这个离屏画布渲染到用户界面上。由于篇幅所限，具体细节就不赘述了，就只贴一些主要的代码出来啦： 
+  </div>
+</div>
+  <div class="code">
+<editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+//开放数据域
+let canvas=wx.getSharedCanvas();
+canvas.fillText('获取的数据',0,0)
+
+//主域内
+let openData = wx.getOpenDataContext();
+ctx.drawImage(openData.canvas, 0, 0, canvas.width, canvas.height)
+</editor>
+  </div>
+<div class="section">
+  <div>另一个是 postMessage(Object message) 方法，在主域内发送消息，在开放数据域内使用 wx.onMessage(function callback) 接受消息，之后执行对应的开放数据的操作，将获得结果渲染出来。
+  其中，消息参数是一个json，其中的值只能是number、string、boolean、null、undefined 中的一个，也就是说不能有数组和json，它们之间的通信类似多线程之间的通信。贴一些主要的代码
+  </div>
+</div>
+  <div class="code">
+<editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+//开放数据域
+wx.onMessage(message => {
+  //do something
+})
+
+//主域内
+let openData = wx.getOpenDataContext();
+openData.postMessage({
+  //...
+})
+</editor>
+  </div>
+
+<div class="title2">4.CloudStorage</div>
+<div class="section">
+  接下来介绍一下小游戏提供的云存储，当然对于储存大小和数量是有限制的。不过对于小游戏来说，肯定是够用的。
+  <div class="image"><img src="assets/images/smallgame/4.png"/></div>
+  <div class='indent-none'>1. wx.setUserCloudStorage(Object object)：这个就是设置存储的数据。</div>
+  <div class="image"><img src="assets/images/smallgame/5.png"/></div>
+  <div class='indent-none'>2. wx.getUserCloudStorage(Object object)：这个是获取当前用户存储的数据。</div>
+  <div class="image"><img src="assets/images/smallgame/6.png"/></div>
+  <div class='indent-none'>3. wx.getFriendCloudStorage(Object object)：这个是获取当前用户以及当前用户所有好友存储的数据。</div>
+  <div class="image"><img src="assets/images/smallgame/7.png"/></div>
+  <div>微信小游戏就是依靠以上三个接口向开发者提供一套简易的云存储，开发者再通过wx.getFriendCloudStorage就可以获取到关系链数据啦。
+  还有一点很好的是，在开放数据域下获取任何用户相关的信息都无需获取用户授权。
+  以上三个接口，除了wx.setUserCloudStorage之外，其他都必须在开放数据域内使用，关于具体参数的使用请
+<span class="stress-bold link" onclick="J.open('https://developers.weixin.qq.com/minigame/dev/document/open-api/data/wx.getFriendCloudStorage.html?t=2018329')">参考官网</span>，还是很详细的</div>
+</div>
+<div class="section">打完收工，以上就是关于微信小游戏开放数据域笔者的一点心得。谢谢驻足阅读。有任何问题可以发邮件至 theajack@qq.com</div>
+        

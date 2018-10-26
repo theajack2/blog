@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="keywords" content="validation,validate,css animation,js,jetter,jQuery,js library">  
+    <meta name="description" content="js library for form operate and validate,select HTMLElement like jQuery">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta content="telephone=no" name="format-detection">
+    <title>Blog theajack</title>
+    <link rel="icon" href="assets/images/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/glyphicon.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css"/>
+  </head>
+  <body>
+    <img class="wc-share-logo" src="assets/images/blog_logo.png"/>
+    <div id="header">
+      <div class="part">
+        <div id="logo">
+          <img src="assets/images/logo.png" onclick="J.open('https://www.theajack.com/')"/>
+        </div>
+        <div class="head-left d-hide" onclick="J.open('https://www.theajack.com/jet/')">
+          Jet
+        </div>
+        <div class="head-left d-hide" onclick="J.open('https://www.theajack.com/jetterjs/')">
+          Jetter.js
+        </div>
+        <div class="head-left d-hide" onclick="develop()">
+          留言板
+        </div>
+        
+        <div class="head-right" id="setWrapper">
+          <span class="glyphicon glyphicon-align-justify" id="set"></span>
+        </div>
+        <div class="head-right login">
+          <span class="glyphicon glyphicon-user"></span>
+          <span class="text">登录</span>
+        </div>
+        
+        <div id="menuWrapper">
+          <div class="menu-triangle"></div>
+          <div class="menu-item regist">注册</div>
+          <div class="menu-item user-center" onclick="develop()">个人中心</div>
+          <div class="menu-item d-show" onclick="J.open('https://www.theajack.com/jet/')">Jet</div>
+          <div class="menu-item d-show" onclick="J.open('https://www.theajack.com/jetterjs/')">Jetterjs</div>
+          <div class="menu-item" onclick="develop()">社区</div>
+          <div class="menu-item d-show" onclick="develop()">留言板</div>
+          <div class="menu-item logout">退出登录</div>
+        </div>
+      </div>
+    </div>
+    <div id="content" class="part clearfix">
+      <div id="main">
+        <div class="search-wrapper block d-show">
+          <input type="text" class="search-input" placeholder="查找"/>
+          <span type="text" class="search-btn glyphicon glyphicon-search" onclick="develop()"></span>
+        </div>
+        <div id="top" class="block">
+          <div class="block-title">置顶加精区</div>
+        </div>
+        <div id="list" class="block">
+          <div class="block-title">全部文章</div>
+        </div>
+        <div class="hot-part block d-show">
+          <div class="block-title">最近热帖</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=12&name=smallgame')">微信小游戏开发之获取微信好友数据</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=10&name=nodeqiniu')">基于Nodejs的七牛云上传资源解决方案</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=3&name=jsonp')">jsonp跨域的客户端服务器搭建</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=7&name=cnchar')">js获取汉字的拼音和笔画数</div>
+        </div>
+        <div class="link-part block clearfix d-show">
+          <div class="block-title">友情链接</div>
+          <img class="link-img" src="assets/images/jetterjs.png" onclick="J.open('https://www.theajack.com/jetterjs/')"/>
+          <img class="link-img bg" src="assets/images/theajack.png" onclick="J.open('https://www.theajack.com/')"/>
+          <img class="link-img" src="assets/images/bikeshare.png" onclick="J.open('http://bikeshare.imwork.net')"/>
+          <span class="link-text">Jetter.js</span>
+          <span class="link-text">个人主页</span>
+          <span class="link-text">人人单车</span>
+          <img class="link-img" src="assets/images/app_2048plus.png" onclick="J.open('http://a.app.qq.com/o/simple.jsp?pkgname=com.main.theajack')"/>
+          <img class="link-img" src="assets/images/app_stonefinanace.png" onclick="J.open('http://a.app.qq.com/o/simple.jsp?pkgname=com.example.stonefinance')"/>
+          <img class="link-img" src="assets/images/app_breakdefence.png" onclick="J.show('In developing')"/>
+          <span class="link-text">2048 plus</span>
+          <span class="link-text">石头理财</span>
+          <span class="link-text">突破防线</span>
+          <img class="link-img" src="assets/images/maze.png" onclick="J.open('https://www.theajack.com/maze/')"/>
+          <img class="link-img" src="assets/images/bombbattle.png" onclick="J.open('https://www.theajack.com/bombbattle/')"/>
+          <img class="link-img bg" src="assets/images/bike query.png" onclick="J.open('https://www.theajack.com/bike/')"/>
+          <span class="link-text">迷宫</span>
+          <span class="link-text">炸弹大作战</span>
+          <span class="link-text">人人纯净版</span>
+        </div>
+      </div>
+      <div id="side" class="d-hide">
+        <div class="search-wrapper block">
+          <input type="text" class="search-input" placeholder="查找"/>
+          <span type="text" class="search-btn glyphicon glyphicon-search" onclick="develop()"></span>
+        </div>
+        <div class="hot-part block">
+          <div class="block-title">最近热帖</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=12&name=smallgame')">微信小游戏开发之获取微信好友数据</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=10&name=nodeqiniu')">基于Nodejs的七牛云上传资源解决方案</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=3&name=jsonp')">jsonp跨域的客户端服务器搭建</div>
+          <div class="link" onclick="J.open('https://www.theajack.com/blog/article.html?id=7&name=cnchar')">js获取汉字的拼音和笔画数</div>
+        </div>
+        <div class="link-part block clearfix">
+          <div class="block-title">友情链接</div>
+          <img class="link-img" src="assets/images/Jet.png" onclick="J.open('https://www.theajack.com/jet/')"/>
+          <img class="link-img bg" src="assets/images/theajack.png" onclick="J.open('https://www.theajack.com/')"/>
+          <img class="link-img" src="assets/images/jetterjs.png" onclick="J.open('https://www.theajack.com/jetterjs/')"/>
+          <span class="link-text">Jet</span>
+          <span class="link-text">个人主页</span>
+          <span class="link-text">Jetter.js</span>
+          <img class="link-img hover" src="assets/images/smallgame.png" onmouseenter="J.show('请扫描二维码体验微信小游戏')",/>
+          <img class="link-img" src="assets/images/app_2048plus.png" onclick="J.open('http://a.app.qq.com/o/simple.jsp?pkgname=com.main.theajack')"/>
+          <img class="link-img" src="assets/images/app_stonefinanace.png" onclick="J.open('http://a.app.qq.com/o/simple.jsp?pkgname=com.example.stonefinance')"/>
+          <span class="link-text">奔跑的柴柴</span>
+          <span class="link-text">2048 plus</span>
+          <span class="link-text">石头理财</span>
+          <img class="link-img" src="assets/images/type.png" onclick="J.open('https://www.theajack.com/type/')"/>
+          <img class="link-img" src="assets/images/maze.png" onclick="J.open('https://www.theajack.com/maze/')"/>
+          <img class="link-img" src="assets/images/bombbattle.png" onclick="J.open('https://www.theajack.com/bombbattle/')"/>
+          <span class="link-text">打飞机</span>
+          <span class="link-text">迷宫</span>
+          <span class="link-text">炸弹大作战</span>
+        </div>
+        <div class="block">
+          <div class="block-title">更多</div>
+          <div id="tjLinks" link-color="#222"></div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="footerLink">
+        <span class="link" onclick="J.open('https://github.com/theajack')">GitHub</span>
+        <span class="split-icon">|</span>
+        <span class="link" onclick="J.open('http://weibo.com/p/1005055304330572/home?from=page_100505&mod=TAB&is_all=1')">Sina Micro-blog</span>
+        <span class="split-icon">|</span>
+        
+        <span class="wechat-public d-hide">WeChat Official Accounts<img class="wechat-img" src="assets/images/wechat_qrcode.jpg"/></span>
+        <span class="split-icon d-hide">|</span>
+        
+        Email:theajack@qq.com
+        <div class=" d-show">
+          <span class="wechat-public">
+            WeChat Official Accounts
+            <img class="wechat-img" src="assets/images/wechat_qrcode.jpg"/>
+          </span>
+        </div>
+      </div>
+      <div id="copyright">
+        <span class="glyphicon glyphicon-copyright-mark"></span> 2017 TheaJack All rights reserved
+      </div>
+    </div>
+    
+    <script src="https://www.theajack.com/assets/js/jetter.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/login.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="https://www.theajack.com/assets/js/link.js"></script>
+    <script name="博客首页" src="https://www.theajack.com/assets/js/stat.js"></script>
+  </body>
+</html>

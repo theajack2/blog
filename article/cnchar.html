@@ -1,0 +1,218 @@
+
+<jh id="hideDes">获取汉字的拼音和笔画数的js库</jh>
+<jh id="hideKeyWords">获取汉字的拼音和笔画数的js库</jh>
+<jh id="hideTitle">js获取汉字的拼音和笔画数</jh>
+<div class="section">
+今天笔者给大家分享一个笔者整理的js库-<span class="stress-bold link" onclick="J.open('http://www.theajack.com/cnchar/')">cnchar.js</span>，其中的具体实现参考网络上的方法，功能是获取汉字的拼音和笔画数。使用非常简单，他只有三个方法：String.spell();String.spellFirst();String.stroke();
+</div>
+<div class="title1">1.spell()</div>
+<div class="section">
+获取汉字的全拼。如<span class="stress-dark">"汉字".spell()</span>的结果就是<span class="stress-dark">HanZi</span>。默认是每个汉字首字母大写，如果希望全部大写可以这样写：<span class="stress-dark">"汉字".spell("up")</span> 或 <span class="stress-dark">"汉字".spell("upper")</span>，参数大小写不限制。
+</div>
+<div class="title1">2.spellFirst()</div>
+<div class="section">
+获取每个汉字的首字母。如 <span class="stress-dark">"汉字".spellFirst()</span> 的结果就是 <span class="stress-dark">HZ</span>。默认是大写，如果希望全部小写可以这样写：<span class="stress-dark">"汉字".spellFirst("low")</span> 或 <span class="stress-dark">"汉字".spellFirst("lower")</span>，参数大小写不限制。
+</div>
+<div class="title1">3.stroke()</div>
+<div class="section">
+获取汉字的笔画数。如 <span class="stress-dark">"汉字".stroke()</span> 的结果就是 <span class="stress-dark">11</span>。
+</div>
+<div class="title1">4.使用</div>
+<div class="section">
+直接用script标签，将src设置为 "http://www.theajack.com/cnchar/assets/js/cnchar.js" 即可以啦，这个文件是utf-8格式编码的，使用的时候注意一下就好;或者<span class="link" onclick="J.open('http://www.theajack.com/cnchar/assets/js/cnchar.js')">点击这里</span>，将源码保存到新建的js文件就可以。
+</div>
+<div class="title1">5.api 文档</div>
+<style type="text/css">
+
+.api-item,.func-item{
+  width: 31.333333%;
+  margin: 0 1%;
+  float: left;
+  background-color: #444;
+  color: #fff;
+  padding: 20px;
+  min-height:368px;
+}
+.api-item{
+  transition:background-color .3s linear;
+  -webkit-transition:background-color .3s linear;
+}
+.func-item{
+  min-height:0px;
+  height:auto;
+  text-align:center;
+  background-color: transparent;
+}
+.func-img{
+  width: 60%;
+  border-radius: 10px;
+  border: 2px solid #000;
+}
+.func-img:hover{
+  background-color: #888;
+}
+.func-text{
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 28px;
+  color:#222;
+}
+/*end function*/
+
+.api-item-title{
+  font-size:30px;
+  text-align: center;
+  font-weight: bold;
+}
+.api-item:hover{
+  background-color:#000;
+}
+.api-item-text{
+  font-size:15px;
+  text-align:center;
+  margin:5px 0;
+  color:#aaa;
+}
+.api-item-ltitle{
+  background-color: #666;
+  padding: 3px 10px;
+  font-size: 18px;
+  margin: 10px 0;
+}
+.api-content-wrapper{
+  
+}
+.api-content{
+  margin: 3px 0;
+  word-break: break-all;
+}
+.api-content-result,.api-test-btn{
+  float: right;
+  background-color: #aaa;
+  padding: 0 5px;
+  font-size: 18px;
+  cursor:pointer;
+}
+.api-content-result:active,.api-test-btn:active{
+  background-color: #888;
+}
+.api-test-wrapper{
+  
+}
+.api-test-input{
+  height: 24px;
+  width: 70%;
+  background-color: #ddd;
+  outline: none;
+  border: 1px solid #444;
+  padding-left: 5px;
+}
+.api-test-input:focus{
+  border: 1px solid #fff;
+}
+.api-test-btn{
+  width: 25%;
+  text-align:center;
+}
+
+@media screen and (max-width:1000px) {
+  .api-item{
+    float: none;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    height:auto;
+    min-height:0px;
+  }
+  .api-item-title{
+    font-size:20px;
+  }
+  
+}
+
+</style>
+<div class="clearfix"> 
+  <div class="api-item">
+    <div class="api-item-title">.spell()</div>
+    <div class="api-item-text">获取汉字完整拼音</div>
+    <div class="api-content-wrapper">
+      <div class="api-item-ltitle">如何使用</div>
+      <div class="api-content clearfix">
+        "测试".spell()
+        <span class="api-content-result" onclick="this.txt('测试'.spell())">查看</span>
+      </div>
+      <div class="api-content clearfix">
+        "测试".spell("up")
+        <span class="api-content-result" onclick="this.txt('测试'.spell('up'))">查看</span>
+      </div>
+      <div class="api-content clearfix">
+        "测试".spell("low")
+        <span class="api-content-result" onclick="this.txt('测试'.spell('low'))">查看</span>
+      </div>
+      <div class="api-item-text">'upper','lower'都合法;不区分大小写</div>
+      <div class="api-item-text">非汉字会返回原字符串</div>
+    </div>
+    <div class="api-test-wrapper">
+      <div class="api-item-ltitle">尝试一下</div>
+      <input type="text" class="api-test-input" placeholder="请输入汉字"/>
+      <span class="api-test-btn" onclick="this.prev().val(this.prev().val().spell())">获取</span>
+    </div>
+  </div>
+  <div class="api-item">
+    <div class="api-item-title">.spellFirst()</div>
+    <div class="api-item-text">获取汉字拼音首字母</div>
+    <div class="api-content-wrapper">
+      <div class="api-item-ltitle">如何使用</div>
+      <div class="api-content clearfix">
+        "测试".spellFirst()
+        <span class="api-content-result" onclick="this.txt('测试'.spellFirst())">查看</span>
+      </div>
+      <div class="api-content clearfix">
+        "测试".spellFirst("low")
+        <span class="api-content-result" onclick="this.txt('测试'.spellFirst('low'))">查看</span>
+      </div>
+      <div style="height:1px"></div>
+      <div class="api-item-text">'lower'合法;不区分大小写</div>
+      <div class="api-item-text">非汉字会返回原字符串</div>
+    </div>
+    <div class="api-test-wrapper">
+      <div class="api-item-ltitle">尝试一下</div>
+      <input type="text" class="api-test-input" placeholder="请输入汉字"/>
+      <span class="api-test-btn" onclick="this.prev().val(this.prev().val().spellFirst())">获取</span>
+    </div>
+  </div>
+  <div class="api-item">
+    <div class="api-item-title">.stroke()</div>
+    <div class="api-item-text">获取汉字笔画数</div>
+
+    <div class="api-content-wrapper">
+      <div class="api-item-ltitle">如何使用</div>
+      <div class="api-content clearfix">
+        "测试".stroke()
+        <span class="api-content-result" onclick="this.txt('测试'.stroke())">查看</span>
+      </div>
+      <div class="api-item-text">非汉字会返回原字符串长度</div>
+    </div>
+    <div class="api-test-wrapper">
+      <div class="api-item-ltitle">尝试一下</div>
+      <input type="text" class="api-test-input" placeholder="请输入汉字"/>
+      <span class="api-test-btn" onclick="this.prev().val(this.prev().val().stroke())">获取</span>
+    </div>
+  </div>
+</div>
+<div class="title1">6.待改进</div>
+<div class="title2">
+1.暂不支持对多音字的处理
+</div>
+<div class="title2">
+2.对某些极其生僻的字也无法查到
+</div>
+<div class="title1">7.参考自</div>
+<div class="title2">
+<span class="stress-bold link" onclick="J.open('https://my.oschina.net/tommyfok/blog/202412')">1.https://my.oschina.net/tommyfok/blog/202412</span>
+</div>
+<div class="title2">
+<span class="stress-bold link" onclick="J.open('http://www.sharejs.com/js/math/170')">2.http://www.sharejs.com/js/math/170</span>
+</div>
+<script src="http://www.theajack.com/cnchar/assets/js/cnchar.min.js"></script>
+      

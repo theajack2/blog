@@ -1,0 +1,209 @@
+
+<jh id="hideDes">基于Nodejs的七牛云上传文件解决方案</jh>
+<jh id="hideKeyWords">Nodejs,七牛云,javascript,ajax</jh>
+<jh id="hideTitle">基于Nodejs的七牛云上传文件解决方案</jh>
+<div class="section">
+许久不更博客了，今天笔者分享一个基于<span class="stress-bold link" onclick="J.open('http://www.runoob.com/nodejs/nodejs-tutorial.html')">Node.js</span>的七牛云上传文件的前后端解决方案。
+</div>
+<div class="title1">1.关于Node.js</div>
+<div class="section">
+关于Nodejs，笔者是一个菜鸟，也是最近才开始学习的，有需要的同学也可以和笔者一起学习。（<span class="stress-bold link" onclick="J.open('http://www.runoob.com/nodejs/nodejs-tutorial.html')">点击学习Nodejs</span>）
+</div>
+<div class="section">
+官网对于Nodejs的简介：简单的说 Node.js 就是运行在服务端的 JavaScript。
+Node.js 是一个基于Chrome JavaScript 运行时建立的一个平台。
+Node.js是一个事件驱动I/O服务端JavaScript环境，基于Google的V8引擎，V8引擎执行Javascript的速度非常快，性能非常好。
+</div>
+<div class="section">
+笔者学习Nodejs时并没有使用<span class="stress-bold link" onclick="J.open('http://www.runoob.com/nodejs/nodejs-tutorial.html')">express框架</span>，而是自己参考教程自己搭了一个，包括文件服务器、路由、数据库等部分，有时间可以考虑写一篇博客分享一下
+</div>
+<div class="section">
+学习了Nodejs之后给笔者的感觉就是，我大JS要一统天下啊！！笔者都想把这个博客系统移植到Nodejs上啦！js操作文件、数据库什么的以前我是想都不敢想的！原谅笔者的无知。
+</div>
+<div class="section">
+关于Nodejs的安装配置什么的官网里很详细，照着做应该问题不大。跳过此步
+</div>
+<div class="title1">2.关于七牛云</div>
+<div class="section">
+七牛云和Nodejs一样也是非常年轻，创建于2011年。功能就是做云储存，让开发者可以把项目里的图片、视频等等文件上传到七牛云上，再通过在项目中外链七牛生成的一个路径就可以使用啦，非常方便，而且很便宜，以下是七牛收费的参考。
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/price.png"/></div>
+<div class="section">
+免费空间有10g可用，超过部分每1G每个月只要一毛钱。。对于笔者这种基本没有流量的个人网站主来说，10g简直是用都用不完啊！泪奔。。。。。
+</div>
+<div class="section">
+这里使用七牛云当然要注册啦，注册部分我也就跳过，注册完成之后需要找到几个重要信息，以方便后续代码的进行，这里要敲黑板。。。
+</div>
+<div class="section">
+1.accessKey：密钥
+</div>
+<div class="section">
+2.secretKey：也是密钥，AK和SK在七牛后台管理的个人中心里的密钥管理里面找，如下图
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/key.png"/></div>
+<div class="section">
+3.scope(或叫bucket_name)：这个就是你新创建的存储空间的名字，比如我的就叫"theajack",在对象存储里面，如下图
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/bucket.png"/></div>
+<div class="section">
+4.上传地址：就是发起上传请求需要的的url，七牛的对象存储分为四个区的机房，分别是：华东（http://up-z0.qiniu.com/）、华北（http://up-z1.qiniu.com/）、华南（http://up-z2.qiniu.com/）、北美（http://up-na0.qiniu.com/）。
+</div>
+<div class="section">
+5.外链地址：上传资源的访问地址，上传成功之后会七牛返回一个Key，外链地址+Key 就是你上传资源访问的路径了，就可以在src属性直接引用。这个在 存储空间=>空间概览=>测试域名 里，如下图。不过既然说了是测试域名，当然有一定限制，它限流量先ip访问频率不，解除限制需要收费。。
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/url.png"/></div>
+<div class="section">
+需要的东西都齐全了，接下来上代码：
+</div>
+<div class="title1">3.大概思路</div>
+<div class="section">
+由于笔者前端相对于后端比较熟悉，所以这个方法主要实现在前端，后端只负责生成一下七牛的 uploadToken，也就是七牛上传的凭证。前端拿到凭证之后，通过ajax使用FormData请求向七牛云上传文件。
+</div>
+<div class="title1">4.后端getToken接口</div>
+<div class="section">
+首先需要使用 npm 安装七牛的nodejs sdk，代码如下，为了省事，笔者选择全局安装 （-g）
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/code0.png"/></div>
+<div class="code">
+  <editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+npm install qiniu -g
+  </editor>
+</div>
+<div class="section">
+笔者没有使用express框架，这里api具体实现代码由于太low，也就不贴出来了，这里贴一下生成七牛token的代码
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/code1.png"/></div>
+<div class="code">
+  <editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+function _getToken(){
+  var accessKey = "xxxxxxxxxxxxxxxxxxxxxxx";//来源请参考2中的accessKey
+  var secretKey = "xxxxxxxxxxxxxxxxxxxxxxx";//来源请参考2中的secretKey
+  var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+  var options = {
+    scope: "theajack",//存储空间的名字
+    expires: 7200//失效时间，单位为s
+  };
+  var putPolicy = new qiniu.rs.PutPolicy(options);
+  var uploadToken=putPolicy.uploadToken(mac);
+  return uploadToken;
+}
+  </editor>
+</div>
+<div class="section">
+参数说明一下，accessKey和secretKey就是第二节提到的两个密钥，scope就是 七牛存储空间的名字，expires 是token的过期时间，单位是秒，默认值是3600。
+node后端接受到前端的ajax请求之后将生成的token返回给前端，后端的工作就完成了。
+</div>
+
+<div class="title1">5.前端上传文件</div>
+<div class="section">
+首先是html代码，简单明了一个input一个button。
+</div>
+
+<div class="image"><img src="assets/images/nodeqiniu/code2.png"/></div>
+<div class="code">
+  <editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+&lt;!DOCTYPE html>
+&lt;html>
+  &lt;head>
+    &lt;meta charset='utf-8'>
+    &lt;title>上传测试&lt;/title>
+  &lt;/head>
+  &lt;body>
+    &lt;input type="file" id="file" />
+    &lt;input type="button" onclick="uploadTest()" value="上传"/>
+    &lt;script type="text/javascript">
+    &lt;/script>
+  &lt;/body>
+&lt;/html>
+  </editor>
+</div>
+<div class="section">
+然后在script插入如下js代码,获取upToken笔者使用了jQuery的ajax方法，读者请自行引入jQuery。至于为什么上传部分没有使用jQuery，是因为经过多种尝试，发现jQuery的上传很难捕捉到上传进度，故使用xmlHttpReque代替，反正jQuery源码也是使用这个实现ajax的。
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/code3.png"/></div>
+<div class="image"><img src="assets/images/nodeqiniu/code4.png"/></div>
+<div class="code">
+  <editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+function uploadTest(){
+  upload(function(src){
+    window.location.href=src;//查看上传的资源
+  })
+}
+function upload(call){
+  getUptoken(function(token){
+    var fileObj = $("#file")[0].files[0]; // js 获取文件对象
+    var url = "http://up-z2.qiniu.com/"; // 接收上传文件的后台地址 华南地区的z2，其他请参考2中的上传地址
+    var form = new FormData(); // FormData 对象
+    form.append("file", fileObj); // 文件对象
+    form.append("token", token); //装入从后端获取的token
+    var xhr;  // XMLHttpRequest 对象
+    if (window.ActiveXObject) {//兼容ie
+      xhr = ActiveXObject("Microsoft.XMLHTTP")
+    } else if (window.XMLHttpRequest) {
+      xhr =new XMLHttpRequest()
+    }
+    xhr.responseType ="json";
+    xhr.open("post", url, true); //post方式，url为服务器请求地址，true 该参数规定请求是否异步处理。
+    xhr.onerror =  function(err){J.show("失败")}; //请求失败
+    xhr.upload.onloadstart = function(e){//上传开始执行方法
+      //do something
+    };
+    xhr.upload.onprogress = function(e){
+      var percent=Math.round(e.loaded/e.total *100);//计算百分比
+      //do something
+    };
+    xhr.onload = function(event){//请求完成
+      //do something
+    }; 
+    xhr.send(form); //开始上传，发送form数据
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var data=xhr.response;
+          if(data.constructor==String){
+            data=JSON.parse(data);
+          }
+          call(url+data.key);//url为2中提到的外链地址，之前也说过，外链地址+key 就是资源的访问地址
+        }else{
+          alert("error")
+        }
+      }
+    }
+  })
+}
+function getUptoken(callback){
+  $.ajax({
+    type: 'GET',  
+    url: urlRoot,//urlRoot你的请求upToken的api地址 比如笔者的是 /api/qiniu/getToken
+    dataType: 'JSON',
+    async: false,
+    cache: false,
+    contentType: false,
+    success: function(d){
+      callback(d.data);
+    },
+    error: function (err) {
+      handleError(err)
+    }
+  });
+}
+  </editor>
+</div>
+<div class="section">
+然后要上传文件直接使用下面的代码就可以，回掉函数的参数就是资源的访问地址
+</div>
+<div class="image"><img src="assets/images/nodeqiniu/code5.png"/></div>
+<div class="code">
+  <editor width="100%" height="auto" disabled buttons="fontSizeUp;fontSizeDown;fullScreen;fix;copy">
+upload(function(src){
+  //do something
+})
+  </editor>
+</div>
+<div class="section">
+至此，笔者的分享都写完了，由于笔者是一枚新手，如有不正指出欢迎留言指正。
+</div>
+<div class="section">
+生成七牛uploadToken参考自<span class="stress-bold link" onclick="J.open('https://developer.qiniu.com/kodo/sdk/1289/nodejs#simple-uptoken')">七牛云的官方api文档</span>
+</div>
+      
